@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanDeactivate} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, CanDeactivate, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {MdDialog} from '@angular/material';
-import {CancelDialogComponent} from './cancel-dialog/cancel-dialog.component';
+import {CancelDialogComponent} from '../cancel-dialog/cancel-dialog.component';
 
 @Injectable()
 export class DirtyGuard implements CanActivate, CanDeactivate<any> {
