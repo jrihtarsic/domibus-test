@@ -110,7 +110,8 @@ public abstract class AbstractWebSecurityConfigurerAdapter extends WebSecurityCo
                         "/rest/application/extauthproviderenabled",
                         "/rest/application/multitenancy",
                         "/rest/application/supportteam",
-                        "/rest/security/user").permitAll()
+                        "/rest/security/user",
+                        "/rest/user/connected").permitAll()
                 .antMatchers("/rest/application/domains").hasAnyAuthority(AuthRole.ROLE_AP_ADMIN.name())
                 .antMatchers(HttpMethod.PUT, "/rest/security/user/password").authenticated()
                 .antMatchers("/rest/pmode/**").hasAnyAuthority(AuthRole.ROLE_ADMIN.name(), AuthRole.ROLE_AP_ADMIN.name())
