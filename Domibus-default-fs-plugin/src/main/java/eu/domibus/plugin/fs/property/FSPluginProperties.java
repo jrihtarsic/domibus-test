@@ -444,6 +444,7 @@ public class FSPluginProperties extends DomibusPropertyExtServiceDelegateAbstrac
                     DomibusPropertyMetadataDTO propertyMetadata = new DomibusPropertyMetadataDTO(name, propMeta.getType(), Module.FS_PLUGIN, DomibusPropertyMetadataDTO.Usage.DOMAIN, propMeta.isWithFallback());
                     propertyMetadata.setStoredGlobally(propMeta.isStoredGlobally());
                     knownProperties.put(propertyMetadata.getName(), propertyMetadata);
+                    LOG.trace("Added a new property metadata [{}] for the domain [{}]", name, domain);
                 }
             } else {
                 updatePropertyName(propMeta);
