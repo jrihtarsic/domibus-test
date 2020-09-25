@@ -21,6 +21,7 @@ export class AuthenticatedAuthorizedGuard implements CanActivate {
   }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    console.log('AuthenticatedAuthorizedGuard called.');
     let canActivate = false;
 
     try {

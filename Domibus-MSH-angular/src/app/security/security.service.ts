@@ -51,13 +51,13 @@ export class SecurityService {
         password: password
       }).subscribe((response: User) => {
       this.updateCurrentUser(response);
-
       this.domainService.setAppTitle();
-
       this.securityEventService.notifyLoginSuccessEvent(response);
+      console.log('login method exiting.');
     }, (error: any) => {
       console.log('Login error');
       this.securityEventService.notifyLoginErrorEvent(error);
+      console.log('login method exiting.');
     });
   }
 
@@ -162,11 +162,11 @@ export class SecurityService {
           .then(isConnected => {
             resolve(true);
           }, err => {
-            console.log('Error while calling isUserConnected: ' + err);
+            console.log('Error while calling isUserConnected: ' + err + '; return false;');
             resolve(false);
           });
       } catch (ex) {
-        console.log('Error while calling isUserConnected: ' + ex);
+        console.log('Error while calling isUserConnected: ' + ex + '; propagate the error');
         reject(ex);
       }
     });
