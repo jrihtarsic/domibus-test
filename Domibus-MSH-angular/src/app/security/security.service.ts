@@ -162,11 +162,11 @@ export class SecurityService {
           .then(isConnected => {
             resolve(true);
           }, err => {
-            console.log('Error while calling isUserConnected: ' + err + '; return false;');
+            console.log('Error while calling isUserConnected, return false;: ', err);
             resolve(false);
           });
       } catch (ex) {
-        console.log('Error while calling isUserConnected: ' + ex + '; propagate the error');
+        console.log('Error while calling isUserConnected,  propagate the error: ', ex);
         reject(ex);
       }
     });
