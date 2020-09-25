@@ -20,6 +20,7 @@ import eu.domibus.common.model.configuration.Party;
 import eu.domibus.core.audit.AuditService;
 import eu.domibus.core.converter.DomainCoreConverter;
 import eu.domibus.core.ebms3.EbMS3Exception;
+import eu.domibus.core.ebms3.receiver.handler.AbstractIncomingMessageHandler;
 import eu.domibus.core.ebms3.sender.client.DispatchClientDefaultProvider;
 import eu.domibus.core.error.ErrorLogDao;
 import eu.domibus.core.jms.DelayedDispatchMessageCreator;
@@ -566,6 +567,7 @@ public class UserMessageDefaultService implements UserMessageService {
 
     @Override
     @MDCKey(DomibusLogger.MDC_MESSAGE_ID)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteMessage(String messageId) {
         LOG.debug("Deleting message [{}]", messageId);
 
@@ -597,25 +599,25 @@ public class UserMessageDefaultService implements UserMessageService {
         List<Long> receiptIds = signalMessageDao.findReceiptIdsByMessageIds(signalMessageIds);
 
         int deleteResult = messageInfoDao.deleteMessages(userMessageIds);
-        LOG.debug("Deleted [{}] messageInfo for userMessage.", deleteResult);
+        LOG.warn("Deleted [{}] messageInfo for userMessage.", deleteResult);
         deleteResult = messageInfoDao.deleteMessages(signalMessageIds);
-        LOG.debug("Deleted [{}] messageInfo for signalMessage.", deleteResult);
+        LOG.warn("Deleted [{}] messageInfo for signalMessage.", deleteResult);
         deleteResult = signalMessageDao.deleteReceipts(receiptIds);
-        LOG.debug("Deleted [{}] receipts.", deleteResult);
+        LOG.warn("Deleted [{}] receipts.", deleteResult);
         deleteResult = userMessageLogDao.deleteMessageLogs(userMessageIds);
-        LOG.debug("Deleted [{}] userMessageLogs.", deleteResult);
+        LOG.warn("Deleted [{}] userMessageLogs.", deleteResult);
         deleteResult = signalMessageLogDao.deleteMessageLogs(signalMessageIds);
-        LOG.debug("Deleted [{}] signalMessageLogs.", deleteResult);
+        LOG.warn("Deleted [{}] signalMessageLogs.", deleteResult);
         deleteResult = messageAttemptDao.deleteAttemptsByMessageIds(userMessageIds);
-        LOG.debug("Deleted [{}] messageSendAttempts.", deleteResult);
+        LOG.warn("Deleted [{}] messageSendAttempts.", deleteResult);
         deleteResult = errorLogDao.deleteErrorLogsByMessageIdInError(userMessageIds);
-        LOG.debug("Deleted [{}] deleteErrorLogsByMessageIdInError.", deleteResult);
+        LOG.warn("Deleted [{}] deleteErrorLogsByMessageIdInError.", deleteResult);
         deleteResult = uiMessageDao.deleteUIMessagesByMessageIds(userMessageIds);
-        LOG.debug("Deleted [{}] deleteUIMessagesByMessageIds for userMessages.", deleteResult);
+        LOG.warn("Deleted [{}] deleteUIMessagesByMessageIds for userMessages.", deleteResult);
         deleteResult = uiMessageDao.deleteUIMessagesByMessageIds(signalMessageIds);
-        LOG.debug("Deleted [{}] deleteUIMessagesByMessageIds for signalMessages.", deleteResult);
+        LOG.warn("Deleted [{}] deleteUIMessagesByMessageIds for signalMessages.", deleteResult);
         deleteResult = messageAcknowledgementDao.deleteMessageAcknowledgementsByMessageIds(userMessageIds);
-        LOG.debug("Deleted [{}] deleteMessageAcknowledgementsByMessageIds.", deleteResult);
+        LOG.warn("Deleted [{}] deleteMessageAcknowledgementsByMessageIds.", deleteResult);
     }
 
     @Override

@@ -3,6 +3,8 @@ package eu.domibus.core.message;
 import eu.domibus.common.MessageStatus;
 import eu.domibus.core.dao.BasicDao;
 import eu.domibus.core.message.pull.MessagePullDto;
+import eu.domibus.core.metrics.Counter;
+import eu.domibus.core.metrics.Timer;
 import eu.domibus.ebms3.common.model.*;
 import eu.domibus.logging.DomibusLogger;
 import eu.domibus.logging.DomibusLoggerFactory;
@@ -55,6 +57,8 @@ public class MessageInfoDao extends BasicDao<Messaging> {
         return messageIds;
     }
 
+    @Timer(clazz = MessageInfoDao.class,value = "deleteMessages")
+    @Counter(clazz = MessageInfoDao.class,value = "deleteMessages")
     public int deleteMessages(List<String> messageIds) {
         final Query deleteQuery = em.createNamedQuery("MessageInfo.deleteMessages");
         deleteQuery.setParameter("MESSAGEIDS", messageIds);

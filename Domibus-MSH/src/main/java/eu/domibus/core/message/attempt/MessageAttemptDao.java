@@ -1,6 +1,9 @@
 package eu.domibus.core.message.attempt;
 
 import eu.domibus.core.dao.BasicDao;
+import eu.domibus.core.message.signal.SignalMessageLogDao;
+import eu.domibus.core.metrics.Counter;
+import eu.domibus.core.metrics.Timer;
 import eu.domibus.logging.DomibusLogger;
 import eu.domibus.logging.DomibusLoggerFactory;
 import org.apache.commons.lang3.StringUtils;
@@ -41,6 +44,8 @@ public class MessageAttemptDao extends BasicDao<MessageAttemptEntity> {
         super.create(entity);
     }
 
+    @Timer(clazz = MessageAttemptDao.class,value = "deleteMessages.deleteAttemptsByMessageIds")
+    @Counter(clazz = MessageAttemptDao.class,value = "deleteMessages.deleteAttemptsByMessageIds")
     public int deleteAttemptsByMessageIds(List<String> messageIds) {
         final Query deleteQuery = em.createNamedQuery("MessageAttemptEntity.deleteAttemptsByMessageIds");
         deleteQuery.setParameter("MESSAGEIDS", messageIds);
