@@ -145,8 +145,8 @@ export class SecurityService {
   }
 
   isUserConnected(): Promise<string> {
-    return this.http.get<string>('rest/security/user/connected').toPromise();
-    // return this.http.get<string>('rest/security/user').toPromise();
+    // return this.http.get<string>('rest/security/user/connected').toPromise();
+    return this.http.get<string>('rest/security/user').toPromise();
   }
 
   getCurrentUserFromServer(): Promise<User> {
